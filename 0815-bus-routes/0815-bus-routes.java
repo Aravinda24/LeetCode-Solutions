@@ -1,19 +1,19 @@
 class Solution {
     public int numBusesToDestination(int[][] routes, int source, int target) {
-     if(source == target)return 0;
+    	if(source == target)return 0;
 
-		HashMap<Integer, List<Integer>> hashMap = new HashMap();
+		HashMap<Integer, HashSet<Integer>> hashMap = new HashMap();
 
 		for (int i = 0; i < routes.length; i++) {
 
 			for (int j = 0; j < routes[i].length; j++) {
 
 				if (hashMap.containsKey(routes[i][j])) {
-					List<Integer> buses = hashMap.get(routes[i][j]);
+					HashSet<Integer> buses = hashMap.get(routes[i][j]);
 					buses.add(i);
 					hashMap.put(routes[i][j], buses);
 				} else {
-					List<Integer> buses = new ArrayList <Integer>();
+					HashSet<Integer> buses = new HashSet<Integer>();
 					buses.add(i);
 					hashMap.put(routes[i][j], buses);
 				}
@@ -33,7 +33,7 @@ class Solution {
 	            
 	            for (int i = 0; i < size; i++) {
 	                int currentStop = q.poll();
-	                List<Integer> routesForCurrentStop = hashMap.get(currentStop);
+	                HashSet<Integer> routesForCurrentStop = hashMap.get(currentStop);
 	                
 	                if (routesForCurrentStop == null) continue;
 	                
