@@ -1,6 +1,8 @@
 class Solution {
     public int numBusesToDestination(int[][] routes, int source, int target) {
-    	if(source == target)return 0;
+        
+       if (source == target)
+			return 0;
 
 		HashMap<Integer, HashSet<Integer>> hashMap = new HashMap();
 
@@ -17,40 +19,43 @@ class Solution {
 					buses.add(i);
 					hashMap.put(routes[i][j], buses);
 				}
-				
 
 			}
 		}
 
 		int noOfBusTaken = 0;
 		Queue<Integer> q = new LinkedList<Integer>();
-		q.offer(source);
+		q.add(source);
 		HashSet<Integer> checked = new HashSet<Integer>();
 
-		 while (!q.isEmpty()) {
-	            int size = q.size();
-	            noOfBusTaken++;
-	            
-	            for (int i = 0; i < size; i++) {
-	                int currentStop = q.poll();
-	                HashSet<Integer> routesForCurrentStop = hashMap.get(currentStop);
-	                
-	                if (routesForCurrentStop == null) continue;
-	                
-	                for (int route : routesForCurrentStop) {
-	                    if (checked.contains(route)) continue;
-	                    
-	                    checked.add(route);
-	                    
-	                    for (int nextStop : routes[route]) {
-	                        if (nextStop == target) return noOfBusTaken;
-	                        
-	                        q.offer(nextStop);
-	                    }
-	                }
-	            }
-	        }
-	        
-	        return -1; 
+		while (!q.isEmpty()) {
+
+			noOfBusTaken++;
+			int qSize = q.size();
+
+			for (int k = 0; k < qSize; k++) {
+				int currentStop = q.poll();
+
+				HashSet<Integer> buses = hashMap.get(currentStop);
+
+				for (int bus : buses) {
+					if (checked.contains(bus))
+						continue;
+					checked.add(bus);
+					for (int busStops : routes[bus]) {
+
+						if (target == busStops) {
+							return noOfBusTaken;
+						} else {
+							q.add(busStops);
+						}
+
+					}
+				}
+			}
+
+		}
+
+		return -1;
     }
 }
